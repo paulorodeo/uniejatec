@@ -9,38 +9,140 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as TagSlugRouteImport } from './routes/tag.$slug'
+import { Route as PaginaSlugRouteImport } from './routes/pagina.$slug'
+import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AutorSlugRouteImport } from './routes/autor.$slug'
 
+const BuscaRoute = BuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TagSlugRoute = TagSlugRouteImport.update({
+  id: '/tag/$slug',
+  path: '/tag/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaginaSlugRoute = PaginaSlugRouteImport.update({
+  id: '/pagina/$slug',
+  path: '/pagina/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
+  id: '/categoria/$slug',
+  path: '/categoria/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutorSlugRoute = AutorSlugRouteImport.update({
+  id: '/autor/$slug',
+  path: '/autor/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/busca': typeof BuscaRoute
+  '/autor/$slug': typeof AutorSlugRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/categoria/$slug': typeof CategoriaSlugRoute
+  '/pagina/$slug': typeof PaginaSlugRoute
+  '/tag/$slug': typeof TagSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/busca': typeof BuscaRoute
+  '/autor/$slug': typeof AutorSlugRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/categoria/$slug': typeof CategoriaSlugRoute
+  '/pagina/$slug': typeof PaginaSlugRoute
+  '/tag/$slug': typeof TagSlugRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/busca': typeof BuscaRoute
+  '/autor/$slug': typeof AutorSlugRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/categoria/$slug': typeof CategoriaSlugRoute
+  '/pagina/$slug': typeof PaginaSlugRoute
+  '/tag/$slug': typeof TagSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/busca'
+    | '/autor/$slug'
+    | '/blog/$slug'
+    | '/categoria/$slug'
+    | '/pagina/$slug'
+    | '/tag/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/busca'
+    | '/autor/$slug'
+    | '/blog/$slug'
+    | '/categoria/$slug'
+    | '/pagina/$slug'
+    | '/tag/$slug'
+    | '/blog'
+  id:
+    | '__root__'
+    | '/'
+    | '/busca'
+    | '/autor/$slug'
+    | '/blog/$slug'
+    | '/categoria/$slug'
+    | '/pagina/$slug'
+    | '/tag/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuscaRoute: typeof BuscaRoute
+  AutorSlugRoute: typeof AutorSlugRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  CategoriaSlugRoute: typeof CategoriaSlugRoute
+  PaginaSlugRoute: typeof PaginaSlugRoute
+  TagSlugRoute: typeof TagSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/busca': {
+      id: '/busca'
+      path: '/busca'
+      fullPath: '/busca'
+      preLoaderRoute: typeof BuscaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +150,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tag/$slug': {
+      id: '/tag/$slug'
+      path: '/tag/$slug'
+      fullPath: '/tag/$slug'
+      preLoaderRoute: typeof TagSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pagina/$slug': {
+      id: '/pagina/$slug'
+      path: '/pagina/$slug'
+      fullPath: '/pagina/$slug'
+      preLoaderRoute: typeof PaginaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categoria/$slug': {
+      id: '/categoria/$slug'
+      path: '/categoria/$slug'
+      fullPath: '/categoria/$slug'
+      preLoaderRoute: typeof CategoriaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/autor/$slug': {
+      id: '/autor/$slug'
+      path: '/autor/$slug'
+      fullPath: '/autor/$slug'
+      preLoaderRoute: typeof AutorSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuscaRoute: BuscaRoute,
+  AutorSlugRoute: AutorSlugRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  CategoriaSlugRoute: CategoriaSlugRoute,
+  PaginaSlugRoute: PaginaSlugRoute,
+  TagSlugRoute: TagSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
