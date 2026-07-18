@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Youtube, Linkedin, Twitter } from "lucide-react";
 import { useSettings } from "@/providers/SettingsProvider";
 import { Logo } from "./Logo";
@@ -38,9 +37,9 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-ink-muted">
               {col.items.map((item) => (
                 <li key={item.href}>
-                  <Link to={item.href} className="hover:text-brand">
+                  <a href={item.href} className="hover:text-brand">
                     {item.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

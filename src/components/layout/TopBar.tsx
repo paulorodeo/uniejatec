@@ -1,5 +1,4 @@
 import { GraduationCap } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 
 export function TopBar() {
   return (
@@ -8,9 +7,9 @@ export function TopBar() {
         <span aria-hidden>👋</span>
         <span>
           Pegue sua Bolsa de Estudos!{" "}
-          <Link to="/pagina/$slug" params={{ slug: "bolsa" }} className="font-semibold underline underline-offset-4">
+          <a href="/pagina/bolsa" className="font-semibold underline underline-offset-4">
             Saiba mais
-          </Link>
+          </a>
         </span>
         <GraduationCap className="h-4 w-4" aria-hidden />
       </div>

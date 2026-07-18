@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { Menu, User, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -17,14 +16,13 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
           {s.menus.header.map((item) => (
-            <Link
+            <a
               key={item.href}
-              to={item.href}
+              href={item.href}
               className="rounded-md px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-brand-softer hover:text-brand"
-              activeProps={{ className: "text-brand bg-brand-soft" }}
             >
               {item.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
@@ -55,14 +53,14 @@ export function Navbar() {
             <SearchAutocomplete />
             <nav className="grid gap-1">
               {s.menus.header.map((item) => (
-                <Link
+                <a
                   key={item.href}
-                  to={item.href}
+                  href={item.href}
                   className="rounded-md px-3 py-2 text-sm font-medium hover:bg-brand-softer"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
-                </Link>
+                </a>
               ))}
             </nav>
             <Button variant="outline-primary" className="w-full">Matricule-se</Button>
