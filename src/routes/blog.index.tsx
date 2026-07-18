@@ -49,9 +49,10 @@ function BlogListPage() {
             <span className="text-ink-muted">Ordenar:</span>
             <select
               value={sort}
-              onChange={(e) =>
-                navigate({ to: ".", search: (p) => ({ ...p, sort: e.target.value as "recent" | "popular", page: 1 }) })
-              }
+              onChange={(e) => {
+                const value = e.target.value as "recent" | "popular";
+                navigate({ to: ".", search: { page: 1, sort: value } });
+              }}
               className="rounded-md border border-border bg-background px-3 py-2"
             >
               <option value="recent">Mais recentes</option>
@@ -72,7 +73,7 @@ function BlogListPage() {
             <Pagination
               page={page}
               totalPages={data.totalPages}
-              onChange={(p) => navigate({ to: ".", search: (prev) => ({ ...prev, page: p }) })}
+              onChange={(p: number) => navigate({ to: ".", search: { page: p, sort } })}
             />
           </>
         )}
