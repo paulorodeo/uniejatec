@@ -1,0 +1,19 @@
+import { GraduationCap } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+
+export function TopBar() {
+  return (
+    <div className="bg-brand text-brand-foreground">
+      <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2 text-sm">
+        <span aria-hidden>👋</span>
+        <span>
+          Pegue sua Bolsa de Estudos!{" "}
+          <Link to="/pagina/$slug" params={{ slug: "bolsa" }} className="font-semibold underline underline-offset-4">
+            Saiba mais
+          </Link>
+        </span>
+        <GraduationCap className="h-4 w-4" aria-hidden />
+      </div>
+    </div>
+  );
+}
