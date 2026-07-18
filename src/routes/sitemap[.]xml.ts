@@ -19,7 +19,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/blog" },
           { path: "/busca" },
           ...cats.map((c) => ({ path: `/categoria/${c.slug}` })),
-          ...posts.items.map((p) => ({ path: `/blog/${p.slug}`, lastmod: p.updatedAt ?? p.publishedAt })),
+          ...posts.items.map((p) => ({ path: `/blog/${p.slug}`, lastmod: p.publishedAt })),
         ];
 
         const urls = entries.map((e) =>
