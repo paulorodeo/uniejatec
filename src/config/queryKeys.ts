@@ -1,0 +1,15 @@
+export const qk = {
+  settings: ["settings"] as const,
+  posts: (params?: Record<string, unknown>) => ["posts", params ?? {}] as const,
+  post: (slug: string) => ["post", slug] as const,
+  categories: ["categories"] as const,
+  category: (slug: string) => ["category", slug] as const,
+  tag: (slug: string) => ["tag", slug] as const,
+  author: (slug: string) => ["author", slug] as const,
+  authorPosts: (slug: string) => ["author-posts", slug] as const,
+  search: (q: string) => ["search", q] as const,
+  page: (slug: string) => ["page", slug] as const,
+  featured: ["featured"] as const,
+  popular: ["popular"] as const,
+  related: (id: string) => ["related", id] as const,
+};
