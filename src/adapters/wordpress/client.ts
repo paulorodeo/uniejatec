@@ -67,11 +67,17 @@ export class WordPressClient {
 
   private buildUrl(path: string, query?: WordPressQuery): string {
     const ns = this.config.defaultNamespace ?? "wp/v2";
-    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-    const withNs = /^([a-z0-9-]+\/v\d+)\//i.test(cleanPath) || cleanPath.startsWith("menus/")
+    // A leading "/" means: bypass the default namespace and hit `<baseUrl>/<path>`
+    // directly (root discovery endpoint, cross-namespace calls, etc.).
+    const absolute = path.startsWith("/");
+    const cleanPath = absolute ? path.slice(1) : path;
+    const withNs = absolute
+      || /^([a-z0-9-]+\/v\d+)\//i.test(cleanPath)
+      || cleanPath.startsWith("menus/")
       ? cleanPath
       : `${ns}/${cleanPath}`;
-    const url = new URL(`${this.config.baseUrl.replace(/\/$/, "")}/${withNs}`);
+    const base = this.config.baseUrl.replace(/\/$/, "");
+    const url = new URL(withNs ? `${base}/${withNs}` : base);
     if (query) {
       for (const [k, v] of Object.entries(query)) {
         if (v === undefined || v === null || v === "") continue;
