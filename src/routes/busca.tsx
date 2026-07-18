@@ -15,7 +15,7 @@ const searchSchema = z.object({ q: z.string().catch("") });
 
 export const Route = createFileRoute("/busca")({
   validateSearch: zodValidator(searchSchema),
-  head: ({ match }) =>
+  head: () =>
     buildSeo({
       title: `Busca — Blog UniEjatec`,
       description: "Encontre artigos, categorias e temas no blog UniEjatec.",
