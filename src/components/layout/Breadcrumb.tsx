@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import type { Breadcrumb as Crumb } from "@/types";
 
@@ -14,9 +13,9 @@ export function Breadcrumb({ items }: { items: Crumb[] }) {
           return (
             <span key={i} className="flex items-center gap-1">
               {c.href && !last ? (
-                <Link to={c.href} className="hover:text-brand">
+                <a href={c.href} className="hover:text-brand">
                   {c.label}
-                </Link>
+                </a>
               ) : (
                 <span className={last ? "font-medium text-ink" : ""}>{c.label}</span>
               )}
