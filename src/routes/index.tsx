@@ -44,7 +44,6 @@ function HomePage() {
   const popular = useSuspenseQuery({ queryKey: qk.popular, queryFn: postsService.popular });
 
   const hero = featured.data[0];
-  const secondary = featured.data.slice(1, 4);
 
   return (
     <SiteLayout>
@@ -150,12 +149,12 @@ function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="grid gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-2">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div>
               <ArticleCard post={hero} variant="featured" />
             </div>
-            <div className="grid gap-6">
-              {secondary.map((p) => (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {featured.data.slice(1, 5).map((p) => (
                 <ArticleCard key={p.id} post={p} />
               ))}
             </div>
