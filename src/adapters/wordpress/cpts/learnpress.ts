@@ -1,21 +1,16 @@
 /**
- * LearnPress CPT stubs.
+ * LearnPress CPT — declared as ordinary CPT definitions.
  *
- * When the site enables the LearnPress REST endpoints (namespace `lp/v1`),
- * replace `notImpl` with real client calls. The DataAdapter interface stays
- * intact — only these repositories change.
+ * Endpoints (LearnPress ≥ 4):
+ *   /wp/v2/lp_course, /wp/v2/lp_lesson
+ *   /lp/v1/courses, /lp/v1/courses/{id}/curriculum, /lp/v1/instructors
  *
- * Endpoint reference (LearnPress ≥ 4):
- *   GET /wp-json/wp/v2/lp_course
- *   GET /wp-json/wp/v2/lp_lesson
- *   GET /wp-json/lp/v1/courses
- *   GET /wp-json/lp/v1/courses/{id}
- *   GET /wp-json/lp/v1/courses/{id}/curriculum
- *   GET /wp-json/lp/v1/instructors
- *   GET /wp-json/lp/v1/users/{id}/course
+ * The repositories are produced by the generic CPT factory; only mappers and
+ * type shapes live here. Enable them by calling `registerLearnPress(registry)`.
  */
-import type { Paginated } from "@/types";
-import type { WordPressClient } from "../client";
+import type { WPPost, WPUser } from "../types";
+import type { CPTDefinition } from "./generic";
+import type { CPTRegistry } from "./registry";
 
 export interface CourseSummary {
   id: string;
@@ -48,33 +43,51 @@ export interface Instructor {
   coursesCount?: number;
 }
 
-export interface Enrollment {
-  id: string;
-  courseId: string;
-  userId: string;
-  status: "enrolled" | "in-progress" | "completed" | "cancelled";
-  progressPercent: number;
-  enrolledAt: string;
-}
+/* ---------------------------- Definitions ---------------------------- */
 
-export interface LearnPressRepository {
-  listCourses(params?: { page?: number; pageSize?: number; search?: string }): Promise<Paginated<CourseSummary>>;
-  courseBySlug(slug: string): Promise<CourseSummary | null>;
-  courseCurriculum(courseId: string): Promise<Lesson[]>;
-  listInstructors(): Promise<Instructor[]>;
-  userEnrollments(userId: string): Promise<Enrollment[]>;
-}
+export const courseDefinition: CPTDefinition<WPPost, CourseSummary> = {
+  key: "lp_course",
+  restBase: "lp_course",
+  embed: true,
+  mapSummary: (raw) => ({
+    id: String(raw.id),
+    slug: raw.slug,
+    title: raw.title.rendered.replace(/<[^>]*>/g, ""),
+    excerpt: raw.excerpt.rendered.replace(/<[^>]*>/g, ""),
+    cover: raw._embedded?.["wp:featuredmedia"]?.[0]?.source_url,
+  }),
+};
 
-/** Not implemented yet — enable when LearnPress REST endpoints are live. */
-export function createLearnPressRepository(_client: WordPressClient): LearnPressRepository {
-  const notImpl = (name: string) => async (): Promise<never> => {
-    throw new Error(`LearnPressRepository.${name} not implemented yet`);
-  };
+export const lessonDefinition: CPTDefinition<WPPost, Lesson> = {
+  key: "lp_lesson",
+  restBase: "lp_lesson",
+  mapSummary: (raw) => ({
+    id: String(raw.id),
+    slug: raw.slug,
+    title: raw.title.rendered.replace(/<[^>]*>/g, ""),
+    courseId: String(raw.meta?.["_lp_course"] ?? ""),
+    order: Number(raw.meta?.["_order"] ?? 0),
+  }),
+};
+
+export const instructorDefinition: CPTDefinition<WPUser, Instructor> = {
+  key: "lp_instructor",
+  namespace: "lp/v1",
+  restBase: "instructors",
+  mapSummary: (raw) => ({
+    id: String(raw.id),
+    slug: raw.slug,
+    name: raw.name,
+    bio: raw.description,
+    avatarUrl: raw.avatar_urls?.["96"],
+  }),
+};
+
+/** Register every LearnPress CPT at once and return the typed repositories. */
+export function registerLearnPress(registry: CPTRegistry) {
   return {
-    listCourses: notImpl("listCourses") as never,
-    courseBySlug: notImpl("courseBySlug") as never,
-    courseCurriculum: notImpl("courseCurriculum") as never,
-    listInstructors: notImpl("listInstructors") as never,
-    userEnrollments: notImpl("userEnrollments") as never,
+    courses: registry.register(courseDefinition),
+    lessons: registry.register(lessonDefinition),
+    instructors: registry.register(instructorDefinition),
   };
 }
