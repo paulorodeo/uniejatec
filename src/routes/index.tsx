@@ -44,7 +44,6 @@ function HomePage() {
   const popular = useSuspenseQuery({ queryKey: qk.popular, queryFn: postsService.popular });
 
   const hero = featured.data[0];
-  const secondary = featured.data.slice(1, 4);
 
   return (
     <SiteLayout>
