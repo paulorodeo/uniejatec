@@ -17,13 +17,22 @@ import { createMediaRepository } from "./repositories/media";
 import { createPagesRepository } from "./repositories/pages";
 import { createMenusRepository } from "./repositories/menus";
 import { createSettingsRepository } from "./repositories/settings";
-import { createLearnPressRepository } from "./cpts/learnpress";
+import { createCPTRegistry, type CPTRegistry } from "./cpts/registry";
+import { registerLearnPress } from "./cpts/learnpress";
+import { registerEvents } from "./cpts/events";
+import { registerTestimonials } from "./cpts/testimonials";
+import { registerDownloads } from "./cpts/downloads";
 
 export interface WordPressAdapterOptions {
   baseUrl: string;
   auth?: WordPressAuth;
   /** Optional slugs of WP menus to hydrate for header/footer. */
   menuSlugs?: { header?: string; footer?: string };
+  /**
+   * Hook to register additional Custom Post Types on the shared registry.
+   * Kept optional so the core adapter has zero knowledge of specific CPTs.
+   */
+  registerCPTs?: (registry: CPTRegistry) => void;
 }
 
 export function createWordPressAdapter(opts: WordPressAdapterOptions) {
@@ -40,7 +49,14 @@ export function createWordPressAdapter(opts: WordPressAdapterOptions) {
   const pagesRepo = createPagesRepository(client);
   const menusRepo = createMenusRepository(client);
   const settingsRepo = createSettingsRepository(client);
-  const learnpress = createLearnPressRepository(client);
+
+  // Generic CPT registry — the only place plugins/CPTs plug into the adapter.
+  const cpts = createCPTRegistry(client);
+  const learnpress = registerLearnPress(cpts);
+  const events = registerEvents(cpts);
+  const testimonials = registerTestimonials(cpts);
+  const downloads = registerDownloads(cpts);
+  opts.registerCPTs?.(cpts);
 
   const postsRepo = createPostsRepository(client, {
     resolveCategoryIdBySlug: (slug) => categoriesRepo.idBySlug(slug),
@@ -118,7 +134,11 @@ export function createWordPressAdapter(opts: WordPressAdapterOptions) {
       pages: pagesRepo,
       menus: menusRepo,
       settings: settingsRepo,
+      cpts,
       learnpress,
+      events,
+      testimonials,
+      downloads,
     },
   };
 }
