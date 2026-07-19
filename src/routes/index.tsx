@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, Monitor, GraduationCap, Award, Users } from "lucide-react";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { CategoryCard } from "@/components/blog/CategoryCard";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { categoriesService, postsService } from "@/services";
 import { qk } from "@/config/queryKeys";
 import { buildSeo } from "@/components/seo/buildSeo";
+import heroStudent from "@/assets/hero-student.jpg";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
@@ -47,35 +48,108 @@ function HomePage() {
 
   return (
     <SiteLayout>
-      <section className="mx-auto max-w-7xl px-4 pt-10 md:pt-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 max-w-3xl"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
-            <Sparkles className="h-3 w-3" /> Blog UniEjatec
-          </span>
-          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-ink md:text-6xl">
-            Educação que <span className="text-brand">transforma</span> sua carreira.
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-ink-muted">
-            Conteúdo prático sobre EJA, cursos técnicos, graduação e pós — com bolsa de estudos e certificação reconhecida pelo MEC.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild variant="hero" size="xl">
-              <Link to="/pagina/$slug" params={{ slug: "bolsa" }}>
-                Peça sua Bolsa <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline-primary" size="xl">
-              <Link to="/blog">Ver artigos</Link>
-            </Button>
-          </div>
-        </motion.div>
+      <section className="relative overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 pt-8 md:pt-12">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-softer via-white to-brand-soft ring-1 ring-brand/10">
+            <div className="grid gap-8 p-6 md:p-10 lg:grid-cols-[1.1fr_1fr] lg:gap-6 lg:p-14">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col justify-center"
+              >
+                <span className="inline-flex w-fit items-center gap-2 rounded-full bg-brand-soft px-3 py-1.5 text-xs font-semibold text-brand ring-1 ring-brand/15">
+                  <Sparkles className="h-3.5 w-3.5" /> Blog UniEjatec
+                </span>
+                <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-ink md:text-5xl lg:text-6xl">
+                  Educação que
+                  <br />
+                  <span className="text-brand">transforma</span> sua carreira.
+                </h1>
+                <p className="mt-5 max-w-xl text-lg text-ink-muted">
+                  Conteúdo prático sobre EJA, cursos técnicos, graduação e pós — com bolsa de estudos e certificação reconhecida pelo MEC.
+                </p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Button asChild variant="hero" size="xl">
+                    <Link to="/pagina/$slug" params={{ slug: "bolsa" }}>
+                      Peça sua Bolsa de Estudos <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline-primary" size="xl">
+                    <Link to="/blog">Ver todos os artigos</Link>
+                  </Button>
+                </div>
+                <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 text-sm sm:grid-cols-4">
+                  {[
+                    { icon: ShieldCheck, label: "Reconhecido", sub: "pelo MEC" },
+                    { icon: Monitor, label: "EAD", sub: "Flexível" },
+                    { icon: GraduationCap, label: "Bolsa de", sub: "Estudos" },
+                    { icon: Award, label: "Certificação", sub: "Garantida" },
+                  ].map(({ icon: Icon, label, sub }) => (
+                    <li key={label} className="flex items-center gap-3">
+                      <span className="grid h-10 w-10 place-items-center rounded-lg bg-white text-brand ring-1 ring-brand/15">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <span className="leading-tight text-ink">
+                        <span className="block font-semibold">{label}</span>
+                        <span className="block text-ink-muted">{sub}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
 
-        {hero && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="relative"
+              >
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2.5rem] bg-brand/10 shadow-2xl shadow-brand/20 lg:aspect-[5/6]">
+                  <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-brand/30 via-transparent to-transparent" aria-hidden />
+                  <img
+                    src={heroStudent}
+                    alt="Estudante da UniEjatec estudando em um laptop"
+                    width={1280}
+                    height={1024}
+                    className="relative h-full w-full object-cover"
+                  />
+                </div>
+                <div className="absolute -left-4 top-8 hidden h-32 w-32 rounded-full bg-brand/20 blur-2xl lg:block" aria-hidden />
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="absolute right-4 top-6 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-xl ring-1 ring-black/5"
+                >
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-soft text-brand">
+                    <Users className="h-5 w-5" />
+                  </span>
+                  <span className="leading-tight">
+                    <span className="block font-display text-lg font-bold text-ink">+15 mil</span>
+                    <span className="block text-xs text-ink-muted">alunos transformando<br />seus futuros</span>
+                  </span>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {hero && (
+        <section className="mx-auto max-w-7xl px-4 py-16">
+          <div className="mb-8">
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand">Destaques</span>
+            <div className="mt-2 flex items-end justify-between gap-4">
+              <div>
+                <h2 className="font-display text-3xl font-bold">Artigos em destaque</h2>
+                <p className="mt-2 text-ink-muted">Conteúdos selecionados para impulsionar seus estudos e carreira.</p>
+              </div>
+              <Link to="/blog" className="inline-flex items-center gap-1 text-sm font-semibold text-brand hover:underline">
+                Ver todos os artigos <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
           <div className="grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <ArticleCard post={hero} variant="featured" />
@@ -86,8 +160,8 @@ function HomePage() {
               ))}
             </div>
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
       <section className="mx-auto max-w-7xl px-4 py-20">
         <div className="mb-8 flex items-end justify-between gap-4">
