@@ -241,7 +241,7 @@ function SobrePage() {
       </section>
 
       {/* MVV */}
-      <section className="bg-gradient-to-br from-brand to-brand-strong py-20 text-brand-foreground">
+      <section className="bg-gradient-to-br from-brand to-brand/80 py-20 text-brand-foreground">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mx-auto max-w-3xl text-center">
             <span className="text-xs font-semibold uppercase tracking-wider text-white/80">
