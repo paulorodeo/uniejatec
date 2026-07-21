@@ -149,13 +149,11 @@ function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div>
-              <ArticleCard post={hero} variant="featured" />
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+            <ArticleCard post={hero} variant="featured" />
+            <div className="grid gap-3 sm:grid-cols-2 sm:grid-rows-2">
               {featured.data.slice(1, 5).map((p) => (
-                <ArticleCard key={p.id} post={p} />
+                <ArticleCard key={p.id} post={p} variant="side" />
               ))}
             </div>
           </div>
