@@ -209,15 +209,17 @@ const pages: Page[] = [
 
 const settings: GlobalSettings = {
   institutionName: "UniEjatec",
-  tagline: "EJA, Graduação, Pós e Cursos Técnicos EAD com Bolsa de Estudos",
+  logoUrl: "https://ejatec.com.br/wp-content/uploads/2026/03/logo-site-uniejatec-ead.png",
+  tagline:
+    "A UniEjatec é referência nacional em educação a distância reconhecida pelo MEC. Oferecemos EJA, Ensino Médio, Cursos Técnicos, Graduação, Tecnólogos e Pós-Graduação com Bolsa de Estudos. Nossa missão é transformar vidas através do conhecimento, com uma metodologia flexível que se adapta à rotina de quem trabalha e estuda. Conte com polos em todo o Brasil, professores especialistas e diplomas válidos em todo o território nacional.",
   phones: ["0800 123 4567"],
   whatsapp: "+55 11 99999-0000",
   address: "São Paulo — SP",
   social: [
-    { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
-    { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
-    { label: "YouTube", href: "https://youtube.com", icon: "youtube" },
-    { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
+    { label: "LinkedIn", href: "https://linkedin.com/company/ejatec", icon: "linkedin" },
+    { label: "Instagram", href: "https://www.instagram.com/uniejatec", icon: "instagram" },
+    { label: "YouTube", href: "https://www.youtube.com/@UniEjatec", icon: "youtube" },
+    { label: "Facebook", href: "https://www.facebook.com/ejatec", icon: "facebook" },
   ],
   menus: {
     header: [
@@ -228,30 +230,39 @@ const settings: GlobalSettings = {
     ],
     footer: [
       {
-        title: "Cursos",
+        title: "EJA EAD",
         items: [
-          { label: "EJA + Técnicos", href: "/categoria/eja" },
-          { label: "Graduação", href: "/categoria/graduacao" },
-          { label: "Cursos Técnicos", href: "/categoria/cursos-tecnicos" },
-          { label: "Pós-Graduação", href: "/categoria/graduacao" },
+          { label: "EJA + Técnicos", href: "https://ejatec.com.br/go/eja/" },
+          { label: "Supletivo", href: "https://ejatec.com.br/supletivo-online/" },
+          { label: "Ensino Médio", href: "https://ejatec.com.br/go/ensino-medio" },
+          { label: "Fundamental", href: "https://ejatec.com.br/go/fundamental" },
         ],
       },
       {
-        title: "Institucional",
+        title: "Cursos",
         items: [
-          { label: "Sobre", href: "/pagina/institucional" },
-          { label: "Bolsa de Estudos", href: "/pagina/bolsa" },
-          { label: "Blog", href: "/blog" },
-          { label: "Contato", href: "/pagina/institucional" },
+          { label: "Cursos Técnicos", href: "https://www.ejatec.com.br/go/tecnico" },
+          { label: "Tecnólogos", href: "https://www.ejatec.com.br/go/tecnologo" },
+          { label: "Graduação", href: "https://www.ejatec.com.br/go/graduacao" },
+          { label: "Por Competência", href: "https://ejatec.com.br/profissoes/tecnico-por-competencia/" },
+        ],
+      },
+      {
+        title: "Institucionais",
+        items: [
+          { label: "Bolsa de Estudos", href: "https://www.ejatec.com.br/go/curso-popular" },
+          { label: "Carreiras", href: "https://ejatec.com.br/carreiras-profissionais/" },
+          { label: "Polos", href: "https://ejatec.com.br/polos/" },
+          { label: "Professores", href: "https://ejatec.com.br/go/professor" },
         ],
       },
       {
         title: "Ajuda",
         items: [
-          { label: "Central de Ajuda", href: "/pagina/institucional" },
-          { label: "FAQ", href: "/pagina/institucional" },
-          { label: "Termos", href: "/pagina/institucional" },
-          { label: "Privacidade", href: "/pagina/institucional" },
+          { label: "Termos", href: "https://ejatec.com.br/lp-term-conditions/" },
+          { label: "Privacidade", href: "https://ejatec.com.br/lp-term-conditions/" },
+          { label: "FAQs", href: "https://ejatec.com.br/faqs/" },
+          { label: "Elucidário", href: "https://www.ejatec.com.br/elucidario/" },
         ],
       },
     ],
