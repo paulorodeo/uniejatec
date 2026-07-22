@@ -83,14 +83,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "UniEjatec — Blog de Educação" },
+      { title: "UniEjatec  Referencia para Headless do Portal Editorial" },
       { name: "description", content: "Blog UniEjatec: EJA, cursos técnicos, graduação e pós-graduação EAD com bolsa de estudos e certificação MEC." },
       { name: "author", content: "UniEjatec" },
-      { property: "og:title", content: "UniEjatec — Blog de Educação" },
-      { property: "og:description", content: "Conteúdo sobre EJA, graduação, cursos técnicos e carreira." },
+      { property: "og:title", content: "UniEjatec  Referencia para Headless do Portal Editorial" },
+      { property: "og:description", content: "Blog UniEjatec: EJA, cursos técnicos, graduação e pós-graduação EAD com bolsa de estudos e certificação MEC." },
       { property: "og:site_name", content: "UniEjatec" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "UniEjatec  Referencia para Headless do Portal Editorial" },
+      { name: "twitter:description", content: "Blog UniEjatec: EJA, cursos técnicos, graduação e pós-graduação EAD com bolsa de estudos e certificação MEC." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/178da13f-29e9-4aaf-b1c0-b1602a0bedd1/id-preview-84a37a94--17117edb-d013-4001-9ab0-43f27b266ef7.lovable.app-1784737648141.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/178da13f-29e9-4aaf-b1c0-b1602a0bedd1/id-preview-84a37a94--17117edb-d013-4001-9ab0-43f27b266ef7.lovable.app-1784737648141.png" },
     ],
     links: [
       {
