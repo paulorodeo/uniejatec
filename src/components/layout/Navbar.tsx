@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useSettings } from "@/providers/SettingsProvider";
 import { Logo } from "./Logo";
 import { SearchAutocomplete } from "@/components/blog/SearchAutocomplete";
+import { whatsappUrl } from "@/lib/contact";
 
 export function Navbar() {
   const s = useSettings();
@@ -32,7 +33,9 @@ export function Navbar() {
 
         <div className="ml-auto flex items-center gap-2">
           <Button asChild variant="outline-primary" size="sm" className="hidden md:inline-flex">
-            <a href="#matricula">Matricule-se</a>
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+              Matricule-se
+            </a>
           </Button>
           <Button variant="ghost" size="icon" aria-label="Conta" className="hidden md:inline-flex">
             <User className="h-5 w-5" />
@@ -63,7 +66,11 @@ export function Navbar() {
                 </a>
               ))}
             </nav>
-            <Button variant="outline-primary" className="w-full">Matricule-se</Button>
+            <Button asChild variant="outline-primary" className="w-full">
+              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+                Matricule-se
+              </a>
+            </Button>
           </div>
         </div>
       )}

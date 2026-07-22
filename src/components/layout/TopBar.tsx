@@ -7,7 +7,12 @@ export function TopBar() {
         <span aria-hidden>👋</span>
         <span>
           Pegue sua Bolsa de Estudos!{" "}
-          <a href="/pagina/bolsa" className="font-semibold underline underline-offset-4">
+          <a
+            href="https://ejatec.com.br/programa-bolsa-de-estudos/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold underline underline-offset-4"
+          >
             Saiba mais
           </a>
         </span>

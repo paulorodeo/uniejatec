@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { categoriesService, postsService } from "@/services";
 import { qk } from "@/config/queryKeys";
 import { buildSeo } from "@/components/seo/buildSeo";
+import { whatsappUrl } from "@/lib/contact";
 import heroStudent from "@/assets/hero-student.jpg";
 
 export const Route = createFileRoute("/")({
@@ -70,9 +71,9 @@ function HomePage() {
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
                   <Button asChild variant="hero" size="xl">
-                    <Link to="/pagina/$slug" params={{ slug: "bolsa" }}>
+                    <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
                       Peça sua Bolsa de Estudos <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    </a>
                   </Button>
                   <Button asChild variant="outline-primary" size="xl">
                     <Link to="/blog">Ver todos os artigos</Link>
@@ -149,13 +150,15 @@ function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
-            <ArticleCard post={hero} variant="featured" />
-            <div className="grid gap-3 sm:grid-cols-2 sm:grid-rows-2">
-              {featured.data.slice(1, 5).map((p) => (
-                <ArticleCard key={p.id} post={p} variant="side" />
-              ))}
+          <div className="grid gap-6 lg:grid-cols-3 lg:grid-rows-2">
+            <div className="lg:col-span-2 lg:row-span-2">
+              <ArticleCard post={hero} variant="featured" />
             </div>
+            {featured.data.slice(1, 3).map((p) => (
+              <div key={p.id} className="lg:col-span-1">
+                <ArticleCard post={p} />
+              </div>
+            ))}
           </div>
         </section>
       )}
@@ -168,7 +171,7 @@ function HomePage() {
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.data.map((c) => (
+          {categories.data.slice(0, 6).map((c) => (
             <CategoryCard key={c.id} category={c} />
           ))}
         </div>
