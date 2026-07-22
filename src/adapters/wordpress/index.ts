@@ -75,7 +75,9 @@ export function createWordPressAdapter(opts: WordPressAdapterOptions) {
       ]);
       return {
         ...mock,
-        institutionName: info?.name ?? mock.institutionName,
+        // Force short brand name — WP returns "UniEjatec EAD - EJATEC Faculdades"
+        // which is too long for the header/logo.
+        institutionName: "UniEjatec",
         tagline: info?.description ?? mock.tagline,
         logoUrl: info?.logoUrl ?? mock.logoUrl,
         menus: {
@@ -83,7 +85,7 @@ export function createWordPressAdapter(opts: WordPressAdapterOptions) {
           footer: mock.menus.footer, // grouped-column footer stays configured locally
         },
         seo: {
-          title: info?.name ?? mock.seo.title,
+          title: mock.seo.title,
           description: info?.description ?? mock.seo.description,
           ogImage: mock.seo.ogImage,
         },

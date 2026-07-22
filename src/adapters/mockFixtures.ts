@@ -28,6 +28,7 @@ const categories: Category[] = [
   { id: "c4", slug: "cursos-tecnicos", name: "Cursos Técnicos", color: "#059669" },
   { id: "c5", slug: "carreira", name: "Carreira", color: "#DC2626" },
   { id: "c6", slug: "bolsa-de-estudos", name: "Bolsa de Estudos", color: "#F59E0B" },
+  { id: "c7", slug: "tecnologia", name: "Tecnologia", color: "#0891B2" },
 ];
 
 const tags: Tag[] = [
@@ -222,8 +223,8 @@ const settings: GlobalSettings = {
     header: [
       { label: "Home", href: "/" },
       { label: "Blog", href: "/blog" },
-      { label: "Cursos", href: "/pagina/institucional" },
-      { label: "Sobre", href: "/pagina/institucional" },
+      { label: "Cursos", href: "/cursos" },
+      { label: "Sobre", href: "/sobre" },
     ],
     footer: [
       {

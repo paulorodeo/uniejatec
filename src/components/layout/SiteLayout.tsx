@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { TopBar } from "./TopBar";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import { WhatsAppButton } from "./WhatsAppButton";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,6 +11,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
