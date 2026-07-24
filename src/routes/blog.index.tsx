@@ -21,7 +21,7 @@ export const Route = createFileRoute("/blog/")({
   validateSearch: zodValidator(searchSchema),
   loaderDeps: ({ search }) => ({ page: search.page, sort: search.sort }),
   loader: async ({ context, deps }) => {
-    await context.queryClient.ensureQueryData({
+    void context.queryClient.prefetchQuery({
       queryKey: qk.posts({ page: deps.page, sort: deps.sort, pageSize: 9 }),
       queryFn: () => postsService.list({ page: deps.page, sort: deps.sort, pageSize: 9 }),
     });
