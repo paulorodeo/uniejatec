@@ -19,13 +19,11 @@ export const Route = createFileRoute("/")({
     // Only block on hero-critical data. Everything else prefetches without blocking navigation.
     void context.queryClient.prefetchQuery({ queryKey: qk.categories, queryFn: categoriesService.list });
     void context.queryClient.prefetchQuery({ queryKey: qk.popular, queryFn: postsService.popular });
-    await Promise.all([
-      context.queryClient.ensureQueryData({ queryKey: qk.featured, queryFn: postsService.featured }),
-      context.queryClient.ensureQueryData({
-        queryKey: qk.posts({ page: 1, pageSize: 6 }),
-        queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
-      }),
-    ]);
+    void context.queryClient.prefetchQuery({
+      queryKey: qk.posts({ page: 1, pageSize: 6 }),
+      queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
+    });
+    await context.queryClient.ensureQueryData({ queryKey: qk.featured, queryFn: postsService.featured });
   },
   head: () =>
     buildSeo({
