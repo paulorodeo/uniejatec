@@ -15,14 +15,15 @@ import heroStudent from "@/assets/hero-student.jpg";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
+    // Only block on hero-critical data. Everything else prefetches without blocking navigation.
+    void context.queryClient.prefetchQuery({ queryKey: qk.categories, queryFn: categoriesService.list });
+    void context.queryClient.prefetchQuery({ queryKey: qk.popular, queryFn: postsService.popular });
     await Promise.all([
       context.queryClient.ensureQueryData({ queryKey: qk.featured, queryFn: postsService.featured }),
       context.queryClient.ensureQueryData({
         queryKey: qk.posts({ page: 1, pageSize: 6 }),
         queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
       }),
-      context.queryClient.ensureQueryData({ queryKey: qk.categories, queryFn: categoriesService.list }),
-      context.queryClient.ensureQueryData({ queryKey: qk.popular, queryFn: postsService.popular }),
     ]);
   },
   head: () =>
