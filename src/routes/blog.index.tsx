@@ -36,7 +36,9 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function BlogListPage() {
-  const { page, sort } = Route.useSearch();
+  const search = Route.useSearch();
+  const page = search.page ?? 1;
+  const sort = search.sort ?? "recent";
   const navigate = Route.useNavigate();
   const { data, isLoading } = useQuery({
     queryKey: qk.posts({ page, sort, pageSize: 9 }),
