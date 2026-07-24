@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ShieldCheck, Monitor, GraduationCap, Award, Users } from "lucide-react";
 import { SiteLayout } from "@/components/layout/SiteLayout";
@@ -42,8 +43,8 @@ function HomePage() {
     queryKey: qk.posts({ page: 1, pageSize: 6 }),
     queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
   });
-  const categories = useSuspenseQuery({ queryKey: qk.categories, queryFn: categoriesService.list });
-  const popular = useSuspenseQuery({ queryKey: qk.popular, queryFn: postsService.popular });
+  const categories = useQuery({ queryKey: qk.categories, queryFn: categoriesService.list, placeholderData: [] });
+  const popular = useQuery({ queryKey: qk.popular, queryFn: postsService.popular, placeholderData: [] });
 
   const hero = featured.data[0];
 
