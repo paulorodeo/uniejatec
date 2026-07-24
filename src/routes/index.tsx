@@ -173,7 +173,7 @@ function HomePage() {
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.data.slice(0, 6).map((c) => (
+          {(categories.data ?? []).slice(0, 6).map((c) => (
             <CategoryCard key={c.id} category={c} />
           ))}
         </div>
@@ -201,7 +201,7 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-20">
         <h2 className="mb-8 font-display text-3xl font-bold">Mais lidos</h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {popular.data.slice(0, 3).map((p) => (
+          {(popular.data ?? []).slice(0, 3).map((p) => (
             <ArticleCard key={p.id} post={p} />
           ))}
         </div>
