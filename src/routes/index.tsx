@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const featured = useSuspenseQuery({ queryKey: qk.featured, queryFn: postsService.featured });
-  const latest = useSuspenseQuery({
+  const latest = useQuery({
     queryKey: qk.posts({ page: 1, pageSize: 6 }),
     queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
   });
@@ -190,7 +190,7 @@ function HomePage() {
           </Button>
         </div>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {latest.data.items.map((p) => (
+          {(latest.data?.items ?? []).map((p) => (
             <ArticleCard key={p.id} post={p} />
           ))}
         </div>
