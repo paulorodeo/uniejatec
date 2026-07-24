@@ -13,15 +13,15 @@ import { qk } from "@/config/queryKeys";
 import { buildSeo } from "@/components/seo/buildSeo";
 
 const searchSchema = z.object({
-  page: z.coerce.number().int().min(1).catch(1),
-  sort: z.enum(["recent", "popular"]).catch("recent"),
+  page: z.coerce.number().int().min(1).catch(1).optional(),
+  sort: z.enum(["recent", "popular"]).catch("recent").optional(),
 });
 
 export const Route = createFileRoute("/blog/")({
   validateSearch: zodValidator(searchSchema),
   loaderDeps: ({ search }) => ({ page: search.page, sort: search.sort }),
   loader: async ({ context, deps }) => {
-    await context.queryClient.ensureQueryData({
+    void context.queryClient.prefetchQuery({
       queryKey: qk.posts({ page: deps.page, sort: deps.sort, pageSize: 9 }),
       queryFn: () => postsService.list({ page: deps.page, sort: deps.sort, pageSize: 9 }),
     });
@@ -36,7 +36,9 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function BlogListPage() {
-  const { page, sort } = Route.useSearch();
+  const search = Route.useSearch();
+  const page = search.page ?? 1;
+  const sort = search.sort ?? "recent";
   const navigate = Route.useNavigate();
   const { data, isLoading } = useQuery({
     queryKey: qk.posts({ page, sort, pageSize: 9 }),

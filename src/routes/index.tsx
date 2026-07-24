@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ShieldCheck, Monitor, GraduationCap, Award, Users } from "lucide-react";
 import { SiteLayout } from "@/components/layout/SiteLayout";
@@ -15,15 +16,14 @@ import heroStudent from "@/assets/hero-student.jpg";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
-    await Promise.all([
-      context.queryClient.ensureQueryData({ queryKey: qk.featured, queryFn: postsService.featured }),
-      context.queryClient.ensureQueryData({
-        queryKey: qk.posts({ page: 1, pageSize: 6 }),
-        queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
-      }),
-      context.queryClient.ensureQueryData({ queryKey: qk.categories, queryFn: categoriesService.list }),
-      context.queryClient.ensureQueryData({ queryKey: qk.popular, queryFn: postsService.popular }),
-    ]);
+    // Only block on hero-critical data. Everything else prefetches without blocking navigation.
+    void context.queryClient.prefetchQuery({ queryKey: qk.categories, queryFn: categoriesService.list });
+    void context.queryClient.prefetchQuery({ queryKey: qk.popular, queryFn: postsService.popular });
+    void context.queryClient.prefetchQuery({
+      queryKey: qk.posts({ page: 1, pageSize: 6 }),
+      queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
+    });
+    await context.queryClient.ensureQueryData({ queryKey: qk.featured, queryFn: postsService.featured });
   },
   head: () =>
     buildSeo({
@@ -37,12 +37,12 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const featured = useSuspenseQuery({ queryKey: qk.featured, queryFn: postsService.featured });
-  const latest = useSuspenseQuery({
+  const latest = useQuery({
     queryKey: qk.posts({ page: 1, pageSize: 6 }),
     queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
   });
-  const categories = useSuspenseQuery({ queryKey: qk.categories, queryFn: categoriesService.list });
-  const popular = useSuspenseQuery({ queryKey: qk.popular, queryFn: postsService.popular });
+  const categories = useQuery({ queryKey: qk.categories, queryFn: categoriesService.list, placeholderData: [] });
+  const popular = useQuery({ queryKey: qk.popular, queryFn: postsService.popular, placeholderData: [] });
 
   const hero = featured.data[0];
 
@@ -171,7 +171,7 @@ function HomePage() {
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.data.slice(0, 6).map((c) => (
+          {(categories.data ?? []).slice(0, 6).map((c) => (
             <CategoryCard key={c.id} category={c} />
           ))}
         </div>
@@ -190,7 +190,7 @@ function HomePage() {
           </Button>
         </div>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {latest.data.items.map((p) => (
+          {(latest.data?.items ?? []).map((p) => (
             <ArticleCard key={p.id} post={p} />
           ))}
         </div>
@@ -199,7 +199,7 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-20">
         <h2 className="mb-8 font-display text-3xl font-bold">Mais lidos</h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {popular.data.slice(0, 3).map((p) => (
+          {(popular.data ?? []).slice(0, 3).map((p) => (
             <ArticleCard key={p.id} post={p} />
           ))}
         </div>
