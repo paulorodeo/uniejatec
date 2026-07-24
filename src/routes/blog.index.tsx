@@ -13,8 +13,8 @@ import { qk } from "@/config/queryKeys";
 import { buildSeo } from "@/components/seo/buildSeo";
 
 const searchSchema = z.object({
-  page: z.coerce.number().int().min(1).catch(1),
-  sort: z.enum(["recent", "popular"]).catch("recent"),
+  page: z.coerce.number().int().min(1).catch(1).optional(),
+  sort: z.enum(["recent", "popular"]).catch("recent").optional(),
 });
 
 export const Route = createFileRoute("/blog/")({
