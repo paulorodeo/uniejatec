@@ -11,6 +11,11 @@ import { Pagination } from "@/components/blog/Pagination";
 import { postsService } from "@/services";
 import { qk } from "@/config/queryKeys";
 import { buildSeo } from "@/components/seo/buildSeo";
+import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, Sparkles } from "lucide-react";
+import heroStudent from "@/assets/hero-student.jpg";
+import { whatsappUrl } from "@/lib/contact";
 
 const searchSchema = z.object({
   page: z.coerce.number().int().min(1).catch(1).optional(),
@@ -48,6 +53,45 @@ function BlogListPage() {
   return (
     <SiteLayout>
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Blog" }]} />
+
+      {/* HERO — instantâneo, independente da REST API */}
+      <section className="relative flex min-h-[calc(100vh-8rem)] items-center overflow-hidden">
+        <div className="mx-auto w-full max-w-7xl px-4 pt-6 md:pt-10">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-softer via-white to-brand-soft p-8 ring-1 ring-brand/10 md:p-14">
+            <div className="grid items-center gap-8 lg:grid-cols-[1.2fr_1fr]">
+              <div>
+                <span className="inline-flex w-fit items-center gap-2 rounded-full bg-brand-soft px-3 py-1.5 text-xs font-semibold text-brand ring-1 ring-brand/15">
+                  <Sparkles className="h-3.5 w-3.5" /> Blog UniEjatec
+                </span>
+                <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-ink md:text-6xl">
+                  Conteúdo que <span className="text-brand">acelera</span> sua jornada.
+                </h1>
+                <p className="mt-5 max-w-xl text-lg text-ink-muted">
+                  Artigos práticos sobre EJA, cursos técnicos, graduação e pós — atualizados toda semana.
+                </p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Button asChild variant="hero" size="xl">
+                    <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+                      Peça sua Bolsa <ArrowRight className="h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline-primary" size="xl">
+                    <Link to="/cursos">Ver cursos</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="relative hidden aspect-[4/5] w-full overflow-hidden rounded-[2rem] bg-brand/10 shadow-2xl shadow-brand/20 lg:block">
+                <img
+                  src={heroStudent}
+                  alt="Estudante UniEjatec"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-7xl px-4 py-10">
         <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
