@@ -67,6 +67,7 @@
   --color-brand-softer: var(--brand-softer);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
+  --color-gold: var(--gold);
 }
 
 :root {
@@ -76,6 +77,7 @@
   --brand-foreground: oklch(1 0 0);
   --brand-soft: oklch(0.96 0.03 258);
   --brand-softer: oklch(0.985 0.012 258);
+  --gold: oklch(0.85 0.17 88);
   --ink: oklch(0.16 0.03 260);
   --ink-muted: oklch(0.42 0.02 260);
 
