@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ShieldCheck, Monitor, GraduationCap, Award, Users } from "lucide-react";
@@ -15,16 +14,6 @@ import { whatsappUrl } from "@/lib/contact";
 import heroStudent from "@/assets/hero-student.jpg";
 
 export const Route = createFileRoute("/")({
-  loader: async ({ context }) => {
-    // Only block on hero-critical data. Everything else prefetches without blocking navigation.
-    void context.queryClient.prefetchQuery({ queryKey: qk.categories, queryFn: categoriesService.list });
-    void context.queryClient.prefetchQuery({ queryKey: qk.popular, queryFn: postsService.popular });
-    void context.queryClient.prefetchQuery({
-      queryKey: qk.posts({ page: 1, pageSize: 6 }),
-      queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
-    });
-    await context.queryClient.ensureQueryData({ queryKey: qk.featured, queryFn: postsService.featured });
-  },
   head: () =>
     buildSeo({
       title: "Blog UniEjatec — Educação, Carreira e Bolsa de Estudos",
@@ -36,20 +25,14 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const featured = useSuspenseQuery({ queryKey: qk.featured, queryFn: postsService.featured });
-  const latest = useQuery({
-    queryKey: qk.posts({ page: 1, pageSize: 6 }),
-    queryFn: () => postsService.list({ page: 1, pageSize: 6 }),
-  });
+  const featured = useQuery({ queryKey: qk.featured, queryFn: postsService.featured, placeholderData: [] });
   const categories = useQuery({ queryKey: qk.categories, queryFn: categoriesService.list, placeholderData: [] });
-  const popular = useQuery({ queryKey: qk.popular, queryFn: postsService.popular, placeholderData: [] });
-
-  const hero = featured.data[0];
+  const hero = featured.data?.[0];
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 pt-8 md:pt-12">
+      <section className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden">
+        <div className="mx-auto w-full max-w-7xl px-4 pt-8 md:pt-12">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-softer via-white to-brand-soft ring-1 ring-brand/10">
             <div className="grid gap-8 p-6 md:p-10 lg:grid-cols-[1.1fr_1fr] lg:gap-6 lg:p-14">
               <motion.div
@@ -154,7 +137,7 @@ function HomePage() {
             <div className="lg:col-span-2 lg:row-span-2">
               <ArticleCard post={hero} variant="featured" />
             </div>
-            {featured.data.slice(1, 3).map((p) => (
+            {(featured.data ?? []).slice(1, 3).map((p) => (
               <div key={p.id} className="lg:col-span-1">
                 <ArticleCard post={p} />
               </div>
@@ -173,34 +156,6 @@ function HomePage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {(categories.data ?? []).slice(0, 6).map((c) => (
             <CategoryCard key={c.id} category={c} />
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-8">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <div>
-            <h2 className="font-display text-3xl font-bold">Últimos artigos</h2>
-            <p className="mt-2 text-ink-muted">Publicações recentes do blog.</p>
-          </div>
-          <Button asChild variant="ghost">
-            <Link to="/blog">
-              Ver todos <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {(latest.data?.items ?? []).map((p) => (
-            <ArticleCard key={p.id} post={p} />
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-20">
-        <h2 className="mb-8 font-display text-3xl font-bold">Mais lidos</h2>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {(popular.data ?? []).slice(0, 3).map((p) => (
-            <ArticleCard key={p.id} post={p} />
           ))}
         </div>
       </section>
