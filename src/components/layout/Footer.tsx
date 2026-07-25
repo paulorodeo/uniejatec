@@ -1,5 +1,6 @@
 import { Instagram, Facebook, Youtube, Linkedin, Twitter } from "lucide-react";
 import { useSettings } from "@/providers/SettingsProvider";
+import topleoAsset from "@/assets/topleo-seo.png.asset.json";
 
 const iconMap = { instagram: Instagram, facebook: Facebook, youtube: Youtube, linkedin: Linkedin, twitter: Twitter };
 
@@ -62,8 +63,7 @@ export function Footer() {
         ))}
       </div>
       <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-start gap-2 px-4 py-6 text-xs text-ink-muted md:flex-row md:items-center md:justify-between">
-          <span>© {new Date().getFullYear()} {s.institutionName}. Todos os direitos reservados.</span>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 px-4 py-6 text-center text-xs text-ink-muted">
           <a
             href="https://topleo.com.br"
             target="_blank"
@@ -72,12 +72,13 @@ export function Footer() {
           >
             <span>Desenvolvido por</span>
             <img
-              src="https://www.ejatec.com.br/wp-content/uploads/2026/02/topleo-seo-2.png"
-              alt="Agência de Desenvolvimento do Website"
-              className="h-4 w-auto"
+              src={topleoAsset.url}
+              alt="Topleo — Agência de Desenvolvimento do Website"
+              className="h-5 w-auto"
               loading="lazy"
             />
           </a>
+          <span>© {new Date().getFullYear()} {s.institutionName}. Todos os direitos reservados.</span>
         </div>
       </div>
     </footer>
