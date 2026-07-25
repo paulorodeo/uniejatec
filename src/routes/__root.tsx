@@ -17,6 +17,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { FALLBACK_IMAGE_URL } from "@/components/ui/SafeImage";
 
 function NotFoundComponent() {
   return (
@@ -132,6 +133,20 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handler = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target || target.tagName !== "IMG") return;
+      const img = target as HTMLImageElement;
+      if (img.dataset.fallbackApplied === "true") return;
+      img.dataset.fallbackApplied = "true";
+      img.src = FALLBACK_IMAGE_URL;
+    };
+    window.addEventListener("error", handler, true);
+    return () => window.removeEventListener("error", handler, true);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
