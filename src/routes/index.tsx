@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, ShieldCheck, Monitor, GraduationCap, Award, Users } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, Monitor, GraduationCap, Award, Users, Clock, HandCoins, Bot, Laptop, BookOpen, School, Presentation, Library } from "lucide-react";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { CategoryCard } from "@/components/blog/CategoryCard";
@@ -156,6 +156,63 @@ function HomePage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {(categories.data ?? []).slice(0, 6).map((c) => (
             <CategoryCard key={c.id} category={c} />
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-brand-softer/60">
+        <div className="mx-auto max-w-7xl px-4 py-16">
+          <div className="text-center">
+            <h2 className="inline-block font-display text-3xl font-extrabold text-ink">
+              Por que escolher a <span className="text-brand">UniEjatec</span>?
+            </h2>
+            <div className="mx-auto mt-2 h-1 w-24 rounded-full bg-gold" />
+          </div>
+          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Clock, title: "Flexibilidade Total", desc: "EAD, semi-presencial ou presencial." },
+              { icon: GraduationCap, title: "Diploma Reconhecido", desc: "Certificação válida em todo o Brasil." },
+              { icon: HandCoins, title: "Bolsa Garantida", desc: "Descontos reais e facilitados." },
+              { icon: Bot, title: "Suporte Inteligente", desc: "Atendimento digital humanizado." },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="flex flex-col items-center text-center">
+                <span className="grid h-16 w-16 place-items-center rounded-full bg-brand text-white">
+                  <Icon className="h-8 w-8" />
+                </span>
+                <h3 className="mt-4 font-display text-lg font-bold text-ink">{title}</h3>
+                <p className="mt-1 text-sm text-ink-muted">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-20">
+        <div className="text-center">
+          <h2 className="inline-block font-display text-3xl font-extrabold text-ink">
+            Modalidades Disponíveis
+          </h2>
+          <div className="mx-auto mt-2 h-1 w-24 rounded-full bg-gold" />
+        </div>
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {[
+            { icon: Laptop, label: "Técnico" },
+            { icon: GraduationCap, label: "Tecnólogo" },
+            { icon: BookOpen, label: "Pós" },
+            { icon: School, label: "EJA" },
+            { icon: Presentation, label: "Profissionalizante" },
+            { icon: Library, label: "Livres" },
+          ].map(({ icon: Icon, label }) => (
+            <a
+              key={label}
+              href="https://ejatec.com.br/courses/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:border-brand hover:shadow-md"
+            >
+              <Icon className="h-10 w-10 text-brand" />
+              <span className="font-semibold text-ink">{label}</span>
+            </a>
           ))}
         </div>
       </section>
