@@ -21,7 +21,7 @@ export function Newsletter({ compact = false }: { compact?: boolean }) {
         <Mail className="h-5 w-5" />
         <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Newsletter</p>
       </div>
-      <h3 className={`font-display font-bold ${compact ? "text-lg text-ink" : "text-2xl"}`}>
+      <h3 className={`font-display font-bold ${compact ? "text-lg text-ink" : "text-2xl text-gold"}`}>
         Receba os melhores conteúdos sobre educação
       </h3>
       <p className={`mt-2 text-sm ${compact ? "text-ink-muted" : "opacity-90"}`}>

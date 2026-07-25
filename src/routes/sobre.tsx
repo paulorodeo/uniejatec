@@ -247,7 +247,7 @@ function SobrePage() {
             <span className="text-xs font-semibold uppercase tracking-wider text-white/80">
               Nossa Tríade
             </span>
-            <h2 className="mt-2 font-display text-3xl font-extrabold md:text-4xl">
+            <h2 className="mt-2 font-display text-3xl font-extrabold text-gold md:text-4xl">
               Missão, Visão e Valores
             </h2>
           </div>
@@ -276,7 +276,7 @@ function SobrePage() {
                 <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/15 text-white">
                   <Icon className="h-6 w-6" />
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-extrabold">{label}</h3>
+                <h3 className="mt-5 font-display text-2xl font-extrabold text-gold">{label}</h3>
                 <p className="mt-3 text-white/90">{text}</p>
               </div>
             ))}
